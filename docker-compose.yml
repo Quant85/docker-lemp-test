@@ -5,14 +5,16 @@ services:
 
 # Nginx Service
  nginx:
-  image: nginx:1.19 # indica l'immagine da utilizzare
+  image: nginx:1.19-alpine # indica l'immagine da utilizzare
   ports: 
-   - '80:80' #indica che vogliamo mappare la porta 80 sulla macchina locale, verremo inoltrati alla porta 80 del contenitore Nginx
+   - 80:80 #indica che vogliamo mappare la porta 80 sulla macchina locale, verremo inoltrati alla porta 80 del contenitore Nginx
   volumes:
    - ./src:/var/www/php
    - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+   - phpmyadmindata:/var/www/phpmyadmin
   depends_on:
    - php
+   - phpmyadmin
 # Servizio PHP
  php:
   build: ./.docker/php # invece di usare l'image useremo il buil che eseguirà il file Dockerfile presente nel percorso indicato, che creerà l'immagine
@@ -38,19 +40,21 @@ services:
    retries: 10 #
 # PhpMyAdmin Service
  phpmyadmin:
-  image: phpmyadmin/phpmyadmin:5
-  ports:
-   - 8080:80
+  image: phpmyadmin/phpmyadmin:5-fpm-alpine
   environment:
    PMA_HOST: mysql
+  volumes:
+   - phpmyadmindata:/var/www/html
   depends_on:
    mysql:
     condition: service_healthy
 
 # Volumes
 volumes:
+
  mysqldata: # senza questo volume, ogni qualvolta il contenitore mysql viene distrutto il database verrebbe distrutto con esso. Per renderlo persistente usiamo questo volume che memorizza i dati in locale
 
+ phpmyadmindata:
 
 
 
