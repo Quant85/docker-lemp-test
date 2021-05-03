@@ -77,4 +77,4 @@ seguito da `docker-compose images` per verificare il peso della nuova configuraz
 Se tutto è andato a buonfine dovremmo aver un peso complessivo di circa 700MB (dai 1.5 GB iniziali), di cui 470 MB
 associati a mysql, che è rimasto invariato.
 
-Ora per accedere a phpMyAdmin invece di accedere mediante `localhost:8080` possiamo accedere mediante [phpmyadmin.test](https://phpmyadmin.test)
+Ora per accedere a phpMyAdmin invece di accedere mediante `localhost:8080` possiamo accedere mediante [phpmyadmin.test](http://phpmyadmin.test/)
